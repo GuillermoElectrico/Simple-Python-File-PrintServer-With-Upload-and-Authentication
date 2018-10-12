@@ -2,8 +2,8 @@
 # after running `sudo ./install`, the server should run at http://host:port/base_url
 host = '188.213.165.213'
 port = 5000
-base_url = '/tmp/PDF'
+base_url = './PDFtoPRINT'
 username = 'admin'
-password = 'mypassword'
+password = 'admin'
 
 # for example, with above default values, the server should run at 127.0.0.1:5000/some_preferred_url/
