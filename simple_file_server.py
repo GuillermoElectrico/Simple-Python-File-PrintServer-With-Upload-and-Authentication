@@ -34,6 +34,9 @@ class Counter:
     ''' instantiate only once '''
     def __init__(self):
         import sqlite3
+        print "Create a temp dir ./PDFtoPRINT"
+        os.system('mkdir -p ./PDFtoPRINT')
+        os.system('mount -t tmpfs -o mode=1777 tmpfs ./PDFtoPRINT')
         print 'making sqlite3 database'
         self.conn = sqlite3.connect('simple-file-server.db')
         self.cursor = self.conn.cursor()
@@ -151,6 +154,7 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         line = self.rfile.readline()
         remainbytes -= len(line)
         fn = re.findall(r'Content-Disposition.*name="file"; filename="(.*)"', line)
+        fn2 = fn[0]
         if not fn:
             return (False, "Can't find out file name...")
         path = self.url_path_to_file_path(self.path)
@@ -182,10 +186,10 @@ class SimpleHTTPRequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 time.sleep(1)
                 if j:
                     os.system('rm %s' % (fn))
-                    return (False, "File '%s' not printed!" % fn)
+                    return (False, "File '%s' not printed!" % fn2)
                 else:
                     os.system('rm %s' % (fn))
-                    return (True, "File '%s' printed!" % fn)
+                    return (True, "File '%s' printed!" % fn2)
 				####################################################
             else:
                 out.write(preline)
